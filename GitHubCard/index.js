@@ -101,18 +101,21 @@ function cardMaker(obj){
 
   return card
 }
+followersArray.forEach(user => {
+  axios.get(`https://api.github.com/users/${user}`)
+  .then(response => {
+      const card = cardMaker(response.data)
+      cards.appendChild(card)
+    })
+})
 axios.get(`https://api.github.com/users/gabe-morris`)
 .then(response => {
-  console.log(response)
-  console.log(cardMaker(response.data))
   const card = cardMaker(response.data)
   cards.appendChild(card)
 })
 .catch(err => console.log(err.message))
 .finally(() => console.log('done'))
-console.log(document.querySelector('.cards'))
 
- 
 /*
   List of LS Instructors Github username's:
     tetondan
