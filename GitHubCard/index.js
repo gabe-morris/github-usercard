@@ -29,7 +29,13 @@ import axios from 'axios'
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell'
+];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -55,7 +61,7 @@ function cardMaker(obj){
   //instantiate elements
   const card = document.createElement('div')
   const cardInfo = document.createElement('div')
-  const avatar = document.createElement('img')
+  const img = document.createElement('img')
   const name = document.createElement('h3')
   const username = document.createElement('p')
   const location = document.createElement('p')
@@ -66,20 +72,23 @@ function cardMaker(obj){
   const bio = document.createElement('p')
 
   //new class names, textContent, and img src
+  card.classList.add('card')
   cardInfo.classList.add('card-info')
   name.classList.add('name')
   username.classList.add('username')
   name.textContent = obj.name
   username.textContent = obj.login
-  location.textContent = obj.location
+  location.textContent = `Location: ${obj.location}`
   address.href = obj.html_url
-  followers.textContent = obj.followers
-  following.textContent = obj.following
-  bio.textContent = obj.bio
-  avatar.src = obj.avatar_url
+  address.textContent = obj.html_url
+  profile.textContent = "Profile:"
+  followers.textContent = `Followers: ${obj.followers}`
+  following.textContent = `Following: ${obj.following}`
+  bio.textContent = `Bio: ${obj.bio}`
+  img.src = obj.avatar_url
   
   //establishing hierarchy
-  card.appendChild(avatar)
+  card.appendChild(img)
   card.appendChild(cardInfo)
   cardInfo.appendChild(name)
   cardInfo.appendChild(username)
@@ -89,12 +98,19 @@ function cardMaker(obj){
   cardInfo.appendChild(followers)
   cardInfo.appendChild(following)
   cardInfo.appendChild(bio)
+
+  return card
 }
 axios.get(`https://api.github.com/users/gabe-morris`)
-.then(response => console.log(response.data))
+.then(response => {
+  console.log(response)
+  console.log(cardMaker(response.data))
+  const card = cardMaker(response.data)
+  cards.appendChild(card)
+})
 .catch(err => console.log(err.message))
 .finally(() => console.log('done'))
-
+console.log(document.querySelector('.cards'))
 
  
 /*
