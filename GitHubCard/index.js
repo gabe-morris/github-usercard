@@ -1,10 +1,11 @@
+import axios from 'axios'
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
-/*
+  
+/*   
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
     data in order to use it to build your component function
@@ -49,7 +50,53 @@ const followersArray = [];
       </div>
     </div>
 */
+const cards = document.querySelector('.cards')
+function cardMaker(obj){
+  //instantiate elements
+  const card = document.createElement('div')
+  const cardInfo = document.createElement('div')
+  const avatar = document.createElement('img')
+  const name = document.createElement('h3')
+  const username = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')
+  const address = document.createElement('a')
+  const followers = document.createElement('p')
+  const following = document.createElement('p')
+  const bio = document.createElement('p')
 
+  //new class names, textContent, and img src
+  cardInfo.classList.add('card-info')
+  name.classList.add('name')
+  username.classList.add('username')
+  name.textContent = obj.name
+  username.textContent = obj.login
+  location.textContent = obj.location
+  address.href = obj.html_url
+  followers.textContent = obj.followers
+  following.textContent = obj.following
+  bio.textContent = obj.bio
+  avatar.src = obj.avatar_url
+  
+  //establishing hierarchy
+  card.appendChild(avatar)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(username)
+  cardInfo.appendChild(location)
+  cardInfo.appendChild(profile)
+  profile.appendChild(address)
+  cardInfo.appendChild(followers)
+  cardInfo.appendChild(following)
+  cardInfo.appendChild(bio)
+}
+axios.get(`https://api.github.com/users/gabe-morris`)
+.then(response => console.log(response.data))
+.catch(err => console.log(err.message))
+.finally(() => console.log('done'))
+
+
+ 
 /*
   List of LS Instructors Github username's:
     tetondan
